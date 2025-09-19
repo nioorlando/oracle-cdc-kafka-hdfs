@@ -1,0 +1,62 @@
+{
+  "name": "oracle-cdc-<username>",
+  "config": {
+    "connector.class": "io.debezium.connector.oracle.OracleConnector",
+
+    "topic.prefix": "<TOPIC_PREFIX>",
+
+    "tasks.max": "1",
+    "include.schema.changes": "false",
+    "schema.include.list": "<SCHEMA_NAME>",             // contoh: CDC
+    "table.include.list": "<SCHEMA_NAME>.<TABLE_NAME>", // contoh: CDC.DEMO
+    "snapshot.mode": "initial",
+    "log.mining.strategy": "online_catalog",
+
+    // --- Oracle connection (ganti sesuai environment) ---
+    "database.connection.adapter": "logminer",
+    "database.hostname": "<ORACLE_HOST>",  // contoh: oracle.example.internal
+    "database.port": "1521",
+    "database.dbname": "<ORACLE_DB>",      // contoh: XE
+    "database.pdb.name": "<ORACLE_PDB>",   // contoh: XEPDB1
+    "database.user": "<ORACLE_USER>",      // contoh: C##CDC
+    "database.password": "<ORACLE_PASSWORD>",
+
+    // --- Kafka cluster security used by the connector client ---
+    "security.protocol": "SASL_SSL",
+    "sasl.mechanism": "GSSAPI",
+    "sasl.kerberos.service.name": "kafka",
+    "ssl.truststore.location": "<TRUSTSTORE_PATH>",     // contoh: /path/to/kafka-truststore.jks
+    "ssl.truststore.password": "<TRUSTSTORE_PASSWORD>", // contoh: changeit
+
+    // --- Producer overrides (events to Kafka topics) ---
+    "producer.override.security.protocol": "SASL_SSL",
+    "producer.override.sasl.mechanism": "GSSAPI",
+    "producer.override.sasl.kerberos.service.name": "kafka",
+    "producer.override.ssl.truststore.location": "<TRUSTSTORE_PATH>",
+    "producer.override.ssl.truststore.password": "<TRUSTSTORE_PASSWORD>",
+
+    // --- Consumer overrides (internal reads) ---
+    "consumer.override.security.protocol": "SASL_SSL",
+    "consumer.override.sasl.mechanism": "GSSAPI",
+    "consumer.override.sasl.kerberos.service.name": "kafka",
+    "consumer.override.ssl.truststore.location": "<TRUSTSTORE_PATH>",
+    "consumer.override.ssl.truststore.password": "<TRUSTSTORE_PASSWORD>",
+
+    // --- Database history (required by Debezium) ---
+    "database.history.kafka.bootstrap.servers": "<BROKER_1:9093>,<BROKER_2:9093>",
+    "database.history.kafka.topic": "<HISTORY_TOPIC>",  // contoh: oracle.schema.history
+    "database.history.consumer.security.protocol": "SASL_SSL",
+    "database.history.consumer.sasl.mechanism": "GSSAPI",
+    "database.history.consumer.sasl.kerberos.service.name": "kafka",
+    "database.history.consumer.ssl.truststore.location": "<TRUSTSTORE_PATH>",
+    "database.history.consumer.ssl.truststore.password": "<TRUSTSTORE_PASSWORD>",
+    "database.history.producer.security.protocol": "SASL_SSL",
+    "database.history.producer.sasl.mechanism": "GSSAPI",
+    "database.history.producer.sasl.kerberos.service.name": "kafka",
+    "database.history.producer.ssl.truststore.location": "<TRUSTSTORE_PATH>",
+    "database.history.producer.ssl.truststore.password": "<TRUSTSTORE_PASSWORD>",
+
+    // --- (Opsional) Group/offset behavior ---
+    "consumer.override.group.id": "oracle-cdc-<username>-group"
+  }
+}
