@@ -1,0 +1,44 @@
+{
+  "name": "hdfs-sink-<USERNAME>",
+  "config": {
+    "connector.class": "com.cloudera.dim.kafka.connect.hdfs.HdfsSinkConnector",
+    "tasks.max": "1",
+    "topics": "<TOPIC_NAME>",
+
+    // ===== Kafka client security (consumer used by the sink) =====
+    "consumer.override.security.protocol": "SASL_SSL",
+    "consumer.override.sasl.mechanism": "GSSAPI",
+    "consumer.override.sasl.kerberos.service.name": "kafka",
+    "consumer.override.ssl.truststore.location": "<TRUSTSTORE_PATH>",     // e.g. /path/to/kafka-truststore.jks
+    "consumer.override.ssl.truststore.password": "<TRUSTSTORE_PASSWORD>", // e.g. changeit
+
+    // ===== HDFS & Kerberos =====
+    "hadoop.conf.path": "file:///etc/hadoop/conf",
+    "hdfs.uri": "hdfs://<NAMENODE_HOST>:8020",
+    "hdfs.output": "/cdc/<USERNAME>",
+    "hdfs.kerberos.authentication": "true",
+    "hdfs.kerberos.keytab.path": "${cm-agent:keytab}",
+    "hdfs.kerberos.user.principal": "${cm-agent:ENV:kafka_connect_service_principal}",
+    "hdfs.kerberos.namenode.principal": "hdfs/<NAMENODE_HOST>@<KERBEROS_REALM>",
+
+    // ===== Hive (opsional, jika perlu metastore) =====
+    "hive.metastore.uris": "thrift://<HMS_HOST>:9083",
+
+    // ===== Converter & writer =====
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true",
+    "value.converter.passthrough.enabled": "true",
+
+    // Cloudera DIM HDFS writer (JSON). Untuk Parquet, ganti writer class-nya.
+    "output.storage": "com.cloudera.dim.kafka.connect.hdfs.HdfsPartitionStorage",
+    "output.writer": "com.cloudera.dim.kafka.connect.partition.writers.json.JsonPartitionWriter",
+    "output.avro.passthrough.enabled": "true",
+
+    // ===== Schema Registry (opsional; hapus jika tidak dipakai) =====
+    "value.converter.schema.registry.url": "https://<SCHEMA_REGISTRY_HOST>:7790",
+
+    // ===== Lain-lain =====
+    "secret.properties": ""
+  }
+}
