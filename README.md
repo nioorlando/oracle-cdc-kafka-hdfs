@@ -7,7 +7,7 @@ The pipeline uses **Debezium Oracle Source Connector** to capture CDC events, st
 ---
 
 ## 🏗 Architecture
-<img src="ora_debezium_hdfs.jpg" alt="Oracle CDC to Kafka to HDFS Pipeline" width="750"/>
+<img src="image/ora_debezium_hdfs.jpg" alt="Oracle CDC to Kafka to HDFS Pipeline" width="750"/>
 
 **Flow:**
 1. **Oracle DB** → transactional source.  
