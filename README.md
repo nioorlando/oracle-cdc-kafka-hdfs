@@ -47,6 +47,9 @@ oracle-cdc-kafka-hdfs/
 ├── configs/
 │   ├── oracle-cdc.json
 │   └── hdfs-sink.json
+│   └── kafka_client_jaas.conf
+│   └── kafka-truststore.jks
+│   └── krb5.conf
 ├── sample_data/
 │   └── transactions_raw.jsonl
 │   └── transactions_curated.json
