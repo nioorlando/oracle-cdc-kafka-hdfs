@@ -48,7 +48,8 @@ oracle-cdc-kafka-hdfs/
 │   ├── oracle-cdc.json
 │   └── hdfs-sink.json
 ├── sample_data/
-│   └── transactions.csv
+│   └── transactions_raw.jsonl
+│   └── transactions_curated.json
 └── notebooks/
     └── UC1_Panduan_enterprise.ipynb
 ```
@@ -71,11 +72,19 @@ df_partitioned = (df_parsed
 ---
 
 ## 🔹 Sample Data
+
+Example preview:
+
 | id | name    | timestamp           |
 |----|---------|---------------------|
 | 1  | Alice   | 2025-09-01 10:00:00 |
 | 2  | Bob     | 2025-09-01 10:05:00 |
 | 3  | Charlie | 2025-09-01 10:10:00 |
+
+Full sample available in:
+- [`transactions_raw.jsonl`](sample_data/transactions_raw.jsonl) → Debezium CDC raw events (JSON Lines).
+- [`transactions_curated.json`](sample_data/transactions_curated.json) → Curated output after Spark Structured Streaming.
+
 
 ---
 
