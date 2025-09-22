@@ -43,7 +43,8 @@ oracle-cdc-kafka-hdfs/
 ├── README.md
 ├── images/
 │   └── ora_debezium_hdfs.png
-├── kafka_spark_consumer.py
+├── spark/
+│   └── kafka_spark_consumer.py
 ├── configs/
 │   ├── oracle-cdc.json
 │   └── hdfs-sink.json
