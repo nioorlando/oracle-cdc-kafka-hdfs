@@ -63,7 +63,7 @@ oracle-cdc-kafka-hdfs/
 ## 🚀 Components
 
 ### 🔹 Kafka Spark Consumer
-[`kafka_spark_consumer.py`](kafka_spark_consumer.py)  
+[`spark/kafka_spark_consumer.py`](kafka_spark_consumer.py)  
 Reads messages from Kafka topic and writes partitioned Parquet files to HDFS.  
 
 ```python
